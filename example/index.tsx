@@ -1,13 +1,13 @@
 import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { Thing } from '../.';
-
+import {StateProvider} from './store'
+import Counter from './Counter';
 const App = () => {
   return (
-    <div>
-      <Thing />
-    </div>
+    <StateProvider>
+      <Counter/>
+    </StateProvider>
   );
 };
 
