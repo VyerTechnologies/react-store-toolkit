@@ -1,11 +1,13 @@
 import { AnyAction, Reducer } from './redux-types'
 import React, {
-  createContext,
-  useContext,
+  createContext as createReactContext,
+  useContext as useReactContext,
   useReducer,
   useCallback,
   FunctionComponent,
 } from 'react'
+
+import {useContext, createContext, useContextSelector} from 'use-context-selector'
 
 /**
  *
@@ -29,10 +31,15 @@ export function createStore<State, MiddlewareProps = undefined>(
 ) {
   const StateContext = createContext<State>(initialState)
   const useState = () => useContext(StateContext)
-  const DispatchContext = createContext<React.Dispatch<AnyAction>>(() => {})
-  const useDispatch = () => useContext(DispatchContext)
+  const DispatchContext = createReactContext<React.Dispatch<AnyAction>>(() => {})
+  const useDispatch = () => useReactContext(DispatchContext)
 
   type StateProviderProps = Partial<State>
+
+   function useSelector<Selected>(selector: (value: State) => Selected) {
+     const value = useContextSelector<State, Selected>(StateContext, selector);
+     return value
+   }
 
   const StateProvider: FunctionComponent<StateProviderProps> = ({
     children,
@@ -64,6 +71,7 @@ export function createStore<State, MiddlewareProps = undefined>(
   return {
     useState,
     useDispatch,
+    useSelector,
     StateProvider,
   }
 }

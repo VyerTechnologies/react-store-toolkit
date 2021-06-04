@@ -41,6 +41,9 @@ export type {
   CaseReducerWithPrepare,
   SliceActionCreator,
 } from './createSlice'
+
+export {useActionDispatch} from './useActionDispatch'
+
 export type {
   // types
   ActionReducerMapBuilder,

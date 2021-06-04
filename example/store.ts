@@ -1,4 +1,4 @@
-import { createSlice, createStore, PayloadAction } from "../";
+import { createSlice, createStore, PayloadAction, useActionDispatch } from "../";
 const authState = {
   counterName: "Example name",
   count: 0
@@ -21,11 +21,14 @@ const authSlice = createSlice({
   },
   initialState: authState
 });
-
-
 export const { increment, decrement, changeName } = authSlice.actions;
 const authReducer = authSlice.reducer;
 
-export const { StateProvider, useDispatch, useState } = createStore(authState, authReducer, [(_, action, middleWare) => console.log(`${middleWare?.addText} ${action.type}`)], {
-    addText: 'hello'
+
+export const { StateProvider, useDispatch, useState, useSelector } = createStore(authState, authReducer, [(_, action, middleWare) => console.log(`${middleWare?.addText} ${action.type}`)], {
+    addText: 'Dispatched: '
 })
+
+export const useSetIncrement = () =>  useActionDispatch(increment,useDispatch, false)
+export const useSetCounterName = () => useActionDispatch(changeName, useDispatch)
+export const useSetDecrement = () => useActionDispatch(decrement, useDispatch,false)
