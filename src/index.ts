@@ -1,4 +1,5 @@
 export { createStore } from './createStore'
+export {Middleware} from './createStore'
 export { Action, AnyAction, Reducer } from './redux-types'
 export {
   // js
