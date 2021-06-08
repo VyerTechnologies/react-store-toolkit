@@ -206,7 +206,7 @@ describe('createSlice', () => {
         type: 'test/testReducer',
         payload: 'a',
       })
-      expect(prepare).toHaveBeenCalledWith('a', 1)
+      expect(prepare).toHaveBeenCalledWith('a')
     })
 
     it('should call the reducer function', () => {
