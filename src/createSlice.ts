@@ -269,7 +269,7 @@ export function createSlice<
   const sliceCaseReducersByType: Record<string, CaseReducer> = {}
   const actionCreators: Record<string, Function> = {}
 
-  reducerNames.forEach((reducerName) => {
+  reducerNames.forEach(reducerName => {
     const maybeReducerWithPrepare = reducers[reducerName]
     const type = getType(name, reducerName)
 

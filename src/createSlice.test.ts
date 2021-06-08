@@ -8,7 +8,7 @@ describe('createSlice', () => {
         // @ts-ignore
         createSlice({
           reducers: {
-            increment: (state) => state + 1,
+            increment: state => state + 1,
             multiply: (state, action: PayloadAction<number>) =>
               state * action.payload,
           },
@@ -24,7 +24,7 @@ describe('createSlice', () => {
         createSlice({
           name: '',
           reducers: {
-            increment: (state) => state + 1,
+            increment: state => state + 1,
             multiply: (state, action: PayloadAction<number>) =>
               state * action.payload,
           },
@@ -37,7 +37,7 @@ describe('createSlice', () => {
   describe('when passing slice', () => {
     const { actions, reducer, caseReducers } = createSlice({
       reducers: {
-        increment: (state) => state + 1,
+        increment: state => state + 1,
       },
       initialState: 0,
       name: 'cool',
@@ -94,7 +94,7 @@ describe('createSlice', () => {
     const { reducer } = createSlice({
       name: 'test',
       reducers: {
-        increment: (state) => state + 1,
+        increment: state => state + 1,
         multiply: (state, action) => state * action.payload,
       },
       extraReducers: {
@@ -117,7 +117,7 @@ describe('createSlice', () => {
           name: 'counter',
           initialState: 0,
           reducers: {},
-          extraReducers: (builder) =>
+          extraReducers: builder =>
             builder.addCase(
               increment,
               (state, action) => state + action.payload
@@ -131,7 +131,7 @@ describe('createSlice', () => {
           name: 'counter',
           initialState: 0,
           reducers: {},
-          extraReducers: (builder) =>
+          extraReducers: builder =>
             builder.addCase(
               'increment',
               (state, action: { type: 'increment'; payload: number }) =>
@@ -147,10 +147,10 @@ describe('createSlice', () => {
             name: 'counter',
             initialState: 0,
             reducers: {},
-            extraReducers: (builder) =>
+            extraReducers: builder =>
               builder
-                .addCase('increment', (state) => state + 1)
-                .addCase('increment', (state) => state + 1),
+                .addCase('increment', state => state + 1)
+                .addCase('increment', state => state + 1),
           })
         ).toThrowErrorMatchingInlineSnapshot(
           `"addCase cannot be called with two reducers for the same action type"`
@@ -162,7 +162,7 @@ describe('createSlice', () => {
           name: 'counter',
           initialState: 0,
           reducers: {},
-          extraReducers: (builder) =>
+          extraReducers: builder =>
             builder.addMatcher(
               increment.match,
               (state, action: { type: 'increment'; payload: number }) =>
@@ -177,7 +177,7 @@ describe('createSlice', () => {
           name: 'counter',
           initialState: 0,
           reducers: {},
-          extraReducers: (builder) =>
+          extraReducers: builder =>
             builder.addDefaultCase((state, action) => state + action.payload),
         })
         expect(slice.reducer(0, increment(5))).toBe(5)
@@ -189,20 +189,20 @@ describe('createSlice', () => {
 
   describe('behaviour with enhanced case reducers', () => {
     it('should pass all arguments to the prepare function', () => {
-      const prepare = jest.fn((payload, somethingElse) => ({ payload }))
+      const prepare = jest.fn(payload => ({ payload }))
 
       const testSlice = createSlice({
         name: 'test',
         initialState: 0,
         reducers: {
           testReducer: {
-            reducer: (s) => s,
+            reducer: s => s,
             prepare,
           },
         },
       })
 
-      expect(testSlice.actions.testReducer('a', 1)).toEqual({
+      expect(testSlice.actions.testReducer('a')).toEqual({
         type: 'test/testReducer',
         payload: 'a',
       })

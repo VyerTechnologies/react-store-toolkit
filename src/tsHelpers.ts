@@ -66,9 +66,9 @@ export type IsUnknownOrNonInferrable<T, True, False> = AtLeastTS35<
 /**
  * Convert a Union type `(A|B)` to and intersecion type `(A&B)`
  */
-export type UnionToIntersection<U> = (
-  U extends any ? (k: U) => void : never
-) extends (k: infer I) => void
+export type UnionToIntersection<U> = (U extends any
+? (k: U) => void
+: never) extends (k: infer I) => void
   ? I
   : never
 

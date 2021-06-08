@@ -1,12 +1,13 @@
 export { createStore } from './createStore'
-export {Middleware} from './createStore'
+export { Middleware } from './createStore'
 export { Action, AnyAction, Reducer } from './redux-types'
 export {
   // js
   createAction,
   getType,
 } from './createAction'
-export type {
+export { createActionEffectDispatch } from './createActionEffectDispatch'
+export {
   // types
   PayloadAction,
   PayloadActionCreator,
@@ -21,7 +22,7 @@ export {
   // js
   createReducer,
 } from './createReducer'
-export type {
+export {
   // types
   Actions,
   CaseReducer,
@@ -32,7 +33,7 @@ export {
   createSlice,
 } from './createSlice'
 
-export type {
+export {
   // types
   CreateSliceOptions,
   Slice,
@@ -43,9 +44,9 @@ export type {
   SliceActionCreator,
 } from './createSlice'
 
-export {useActionDispatch} from './useActionDispatch'
+export { useActionDispatch } from './useActionDispatch'
 
-export type {
+export {
   // types
   ActionReducerMapBuilder,
 } from './mapBuilders'

@@ -200,14 +200,14 @@ export function createReducer<S>(
 
   const frozenInitialState = initialState
 
-  return function (state = frozenInitialState, action): S {
+  return function(state = frozenInitialState, action): S {
     let caseReducers = [
       actionsMap[action.type],
       ...finalActionMatchers
         .filter(({ matcher }) => matcher(action))
         .map(({ reducer }) => reducer),
     ]
-    if (caseReducers.filter((cr) => !!cr).length === 0) {
+    if (caseReducers.filter(cr => !!cr).length === 0) {
       caseReducers = [finalDefaultCaseReducer]
     }
 

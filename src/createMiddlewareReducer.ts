@@ -1,66 +1,67 @@
-import { MutableRefObject, useCallback, useRef, useState } from 'react';
-import { useEffect } from 'react';
-
+import { MutableRefObject, useCallback, useRef, useState } from 'react'
+import { useEffect } from 'react'
 
 function useFirstMountState(): boolean {
-  const isFirst = useRef(true);
+  const isFirst = useRef(true)
 
   if (isFirst.current) {
-    isFirst.current = false;
+    isFirst.current = false
 
-    return true;
+    return true
   }
 
-  return isFirst.current;
+  return isFirst.current
 }
 const useUpdateEffect: typeof useEffect = (effect, deps) => {
-  const isFirstMount = useFirstMountState();
+  const isFirstMount = useFirstMountState()
 
   useEffect(() => {
     if (!isFirstMount) {
-      return effect();
+      return effect()
     }
-  }, deps);
-};
+  }, deps)
+}
 
-type Dispatch<Action> = (action: Action) => void;
+type Dispatch<Action> = (action: Action) => void
 
 interface Store<Action, State> {
-  getState: () => State;
-  dispatch: Dispatch<Action>;
+  getState: () => State
+  dispatch: Dispatch<Action>
 }
 
 export type Middleware<Action, State> = (
   store: Store<Action, State>
-) => (next: Dispatch<Action>) => (action: Action) => void;
+) => (next: Dispatch<Action>) => (action: Action) => void
 
 function composeMiddleware<Action, State>(chain: Middleware<Action, State>[]) {
   return (context: Store<Action, State>, dispatch: Dispatch<Action>) => {
     return chain.reduceRight((res, middleware) => {
-      return middleware(context)(res);
-    }, dispatch);
-  };
+      return middleware(context)(res)
+    }, dispatch)
+  }
 }
 
-const createMiddlewareReducer = <Action, State>(...middlewares: Middleware<Action, State>[]) => {
-  const composedMiddleware = composeMiddleware<Action, State>(middlewares);
+const createMiddlewareReducer = <Action, State>(
+  ...middlewares: Middleware<Action, State>[]
+) => {
+  const composedMiddleware = composeMiddleware<Action, State>(middlewares)
 
   return (
     reducer: (state: State, action: Action) => State,
     initialState: State,
     initializer = (value: State) => value
   ): [State, Dispatch<Action>] => {
-    const ref = useRef(initializer(initialState));
-    const [, setState] = useState(ref.current);
+    const ref = useRef(initializer(initialState))
+    const [, setState] = useState(ref.current)
 
     const dispatch = useCallback(
-      (action) => {
-        ref.current = reducer(ref.current, action);
-        setState(ref.current);
-        return action;
+      action => {
+        ref.current = reducer(ref.current, action)
+        setState(ref.current)
+        return action
       },
       [reducer]
-    );
+    )
 
     const dispatchRef: MutableRefObject<Dispatch<Action>> = useRef(
       composedMiddleware(
@@ -70,7 +71,7 @@ const createMiddlewareReducer = <Action, State>(...middlewares: Middleware<Actio
         },
         dispatch
       )
-    );
+    )
 
     useUpdateEffect(() => {
       dispatchRef.current = composedMiddleware(
@@ -79,11 +80,11 @@ const createMiddlewareReducer = <Action, State>(...middlewares: Middleware<Actio
           dispatch: (...args: [Action]) => dispatchRef.current(...args),
         },
         dispatch
-      );
-    }, [dispatch]);
+      )
+    }, [dispatch])
 
-    return [ref.current, dispatchRef.current];
-  };
-};
+    return [ref.current, dispatchRef.current]
+  }
+}
 
-export default createMiddlewareReducer;
+export default createMiddlewareReducer

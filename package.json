@@ -14,7 +14,7 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
+    "lint": "tsdx lint src",
     "prepare": "tsdx build",
     "size": "size-limit",
     "analyze": "size-limit --why"
@@ -29,13 +29,18 @@
   },
   "prettier": {
     "printWidth": 80,
-    "semi": true,
+    "semi": false,
     "singleQuote": true,
     "trailingComma": "es5"
   },
   "name": "react-store-toolkit",
   "author": "Saransh Grover",
   "module": "dist/react-store-toolkit.esm.js",
+  "resolutions": {
+    "**/typescript": "^4.0.5",
+    "**/@typescript-eslint/eslint-plugin": "^4.6.1",
+    "**/@typescript-eslint/parser": "^4.6.1"
+  },
   "size-limit": [
     {
       "path": "dist/react-store-toolkit.cjs.production.min.js",
@@ -50,6 +55,8 @@
     "@size-limit/preset-small-lib": "^4.11.0",
     "@types/react": "^17.0.9",
     "@types/react-dom": "^17.0.6",
+    "@typescript-eslint/eslint-plugin": "^4.26.1",
+    "@typescript-eslint/parser": "^4.26.1",
     "husky": "^6.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
