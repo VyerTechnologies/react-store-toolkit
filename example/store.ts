@@ -5,7 +5,7 @@ import {
   useActionDispatch,
   Middleware,
   AnyAction,
-  createActionEffectDispatch,
+  createActionEffect,
 } from '../'
 const authState = {
   counterName: 'Example name',
@@ -52,9 +52,6 @@ export const { StateProvider, useDispatch, useState } = createStore<
 
 export const useSetIncrement = () =>
   useActionDispatch(increment, useDispatch, false)
-export const useSetCounterName = createActionEffectDispatch(
-  changeName,
-  useDispatch
-)
+export const useSetCounterName = createActionEffect(changeName, useDispatch)
 export const useSetDecrement = () =>
   useActionDispatch(decrement, useDispatch, false)

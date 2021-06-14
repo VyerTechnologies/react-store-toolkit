@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { ActionCreatorWithPayload } from './createAction'
 import { AnyAction } from './redux-types'
 
-export const createActionEffectDispatch = <Payload>(
+export const createActionEffect = <Payload>(
   action: ActionCreatorWithPayload<Payload>,
   useDispatch: () => React.Dispatch<AnyAction>
 ) =>

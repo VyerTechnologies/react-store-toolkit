@@ -6,7 +6,7 @@ export {
   createAction,
   getType,
 } from './createAction'
-export { createActionEffectDispatch } from './createActionEffectDispatch'
+export { createActionEffect } from './createActionEffect'
 export {
   // types
   PayloadAction,
