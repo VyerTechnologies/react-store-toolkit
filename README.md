@@ -70,6 +70,17 @@ return (
 
 Take note of the `payload` parameter passed in which is defaulted to `true`. If your action has no payload, you must set it to false explicitly.
 
+### `createActionEffect()`
+
+Returns a hook that allows you to update a part of your store similar to a `useEffect`.
+
+```tsx
+// store.ts
+export const useSetCounterName = createActionEffect(changeName, useDispatch)
+
+// Counter.tsx
+```
+
 ## Example
 
 Examples are available in the [Example directory](https://github.com/saranshgrover/react-store-toolkit/tree/master/example)
