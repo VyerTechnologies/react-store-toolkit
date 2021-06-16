@@ -64,6 +64,12 @@ export type IsUnknownOrNonInferrable<T, True, False> = AtLeastTS35<
 >
 
 /**
+ * Use to make undefined arguments optional, i.e. fn(arg: T | undefined) -> fn(arg?: T)
+ * @internal
+ */
+export type OptionalSpread<T> = T extends undefined ? [] : [T]
+
+/**
  * Convert a Union type `(A|B)` to and intersecion type `(A&B)`
  */
 export type UnionToIntersection<U> = (U extends any

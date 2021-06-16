@@ -6,6 +6,7 @@ export {
   createAction,
   getType,
 } from './createAction'
+export { createActionDispatch } from './createActionDispatch'
 export { createActionEffect } from './createActionEffect'
 export {
   // types
@@ -43,8 +44,6 @@ export {
   CaseReducerWithPrepare,
   SliceActionCreator,
 } from './createSlice'
-
-export { useActionDispatch } from './useActionDispatch'
 
 export {
   // types
